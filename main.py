@@ -1,9 +1,13 @@
 import os
 import requests
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from dotenv import load_dotenv
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='')
+
+@app.route('/')
+def serve_html():
+    return send_from_directory(app.static_folder, 'index.html')
 
 # Load environment variables
 load_dotenv()
@@ -28,10 +32,6 @@ def query_model(prompt):
     except requests.exceptions.RequestException as e:
         return {"error": str(e)}
 
-@app.route('/')
-def home():
-    return "Welcome to the AI Chatbot Web App!"
-
 @app.route('/chat', methods=['POST'])
 def chat():
     user_input = request.json['input']
@@ -39,6 +39,16 @@ def chat():
     if "error" in response:
         return jsonify({"error": response["error"]}), 500
     return jsonify({"response": response[0]["generated_text"]})
+def find_free_port():
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(('', 0))
+        return s.getsockname()[1]
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+    port = find_free_port()
+    print(f"Flask app running on port {port}")
+    app.run(debug=True, host="0.0.0.0", port=port)
+
+    app.run(debug=True, host="0.0.0.0", port=port)
+    print(f"Flask app r  print(f"Flask app running on port {port}")
+
