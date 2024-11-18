@@ -1,0 +1,19 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/my-project-web-chat-91774/chatbot-app', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/my-project-web-chat-91774/chatbot-app']
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args:
+  - 'run'
+  - 'deploy'
+  - 'chatbot-app'
+  - '--image'
+  - 'gcr.io/my-project-web-chat-91774/chatbot-app'
+  - '--region'
+  - 'us-central1'
+  - '--platform'
+  - 'managed'
+  - '--allow-unauthenticated'
+
