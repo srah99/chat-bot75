@@ -14,14 +14,6 @@ resources:
 env_variables:
   GOOGLE_CLOUD_PROJECT: "my-project-web-chat-91774"
 
-includes:
-- ./**
-excludes:
-- .git/**
-- .gitignore
-- .venv/**
-- __pycache__/**
-
 automatic_scaling:
   min_num_instances: 1
   max_num_instances: 5
@@ -46,6 +38,9 @@ readiness_check:
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/my-project-web-chat-91774/chatbot-app', '.']
+  volumes:
+  - name: 'source'
+    path: '/'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/my-project-web-chat-91774/chatbot-app']
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -55,7 +50,7 @@ steps:
   - 'deploy'
   - 'chatbot-app'
   - '--image'
-  - 'gcr.io/your-project-id/chatbot-app'
+  - 'gcr.io/my-project-web-chat-91774/chatbot-app'
   - '--region'
   - 'us-central1'
   - '--platform'
