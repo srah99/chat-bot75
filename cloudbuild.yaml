@@ -1,3 +1,48 @@
+runtime: python39
+env: flex
+
+entrypoint: gunicorn -b :$PORT main:app
+
+runtime_config:
+  python_version: 3.9
+
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+
+env_variables:
+  GOOGLE_CLOUD_PROJECT: "my-project-web-chat-91774"
+
+includes:
+- ./**
+excludes:
+- .git/**
+- .gitignore
+- .venv/**
+- __pycache__/**
+
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 5
+  cool_down_period_sec: 180
+  cpu_utilization:
+    target_utilization: 0.6
+
+liveness_check:
+  path: "/"
+  check_interval_sec: 30
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+
+readiness_check:
+  path: "/"
+  check_interval_sec: 5
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/my-project-web-chat-91774/chatbot-app', '.']
@@ -10,11 +55,12 @@ steps:
   - 'deploy'
   - 'chatbot-app'
   - '--image'
-  - 'gcr.io/my-project-web-chat-91774/chatbot-app'
+  - 'gcr.io/your-project-id/chatbot-app'
   - '--region'
   - 'us-central1'
   - '--platform'
   - 'managed'
   - '--allow-unauthenticated'
+
 options:
   logging: CLOUD_LOGGING_ONLY
