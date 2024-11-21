@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 from google.cloud import storage
 import vertexai
@@ -14,7 +15,7 @@ def chat():
     user_input = request.json['input']
     
     # Initialize Vertex AI
-    vertexai.init(project="your-project-id", location="us-central1")
+    vertexai.init(project="my-project-web-chat-91774", location="us-central1")
     parameters = {
         "temperature": 0.2,
         "max_output_tokens": 256,
@@ -30,4 +31,3 @@ def chat():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
-
