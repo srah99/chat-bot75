@@ -18,13 +18,12 @@ def chat():
         "num_return_sequences": 1,
         "top_p": 0.9,
         "top_k": 50,
-        "temperature": 0.5,
-        "truncation": True,  # added truncation parameter
-        "return_full_text": False  # ensure only truncated text is returned
+        "temperature": 0.5
     }
     response = text_generator(user_input, **parameters)
-    # truncate response further to 100 characters if needed
-    truncated_response = response[0]['generated_text'][:100]
+    sentences = response[0]['generated_text'].split('. ')
+    unique_sentences = list(dict.fromkeys(sentences))  # remove duplicates
+    truncated_response = '. '.join(unique_sentences[:5])  # limit to 5 sentences
     return jsonify({"response": truncated_response})
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
