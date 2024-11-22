@@ -1,6 +1,7 @@
 Flask
 transformers
 tensorflow
+tf-keras
 google-cloud-aiplatform
 google-cloud-storage==1.42.0
 werkzeug==2.2.3
