@@ -1,8 +1,7 @@
-import os
 from flask import Flask, request, jsonify
 from google.cloud import storage
 
-from vertexai.language_models import TextGenerationModel
+from google.cloud.aiplatform import aiplatform.TextClient
 
 app = Flask(__name__)
 
@@ -15,7 +14,7 @@ def chat():
     user_input = request.json['input']
     
     # Initialize Vertex AI
-    vertexai.init(project="my-project-web-chat-91774", location="us-central1")
+    vertexai.init(project="your-project-id", location="us-central1")
     parameters = {
         "temperature": 0.2,
         "max_output_tokens": 256,
