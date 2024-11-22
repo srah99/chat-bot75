@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, jsonify
 from google.cloud import storage
-import vertexai
+import vertexai from google.cloud import aiplatform
 from vertexai.language_models import TextGenerationModel
 
 app = Flask(__name__)
