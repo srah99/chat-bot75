@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from google.cloud import storage
-
-from google.cloud import aiplatform client = aiplatform.TextClient()
+from google.cloud import aiplatform
+client = aiplatform.TextClient()
 
 
 app = Flask(__name__)
