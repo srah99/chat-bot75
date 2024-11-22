@@ -1,10 +1,10 @@
+python
 from flask import Flask, request, jsonify
-from google.cloud import storage
-from google.cloud import aiplatform
-client = aiplatform.TextClient()
-
+from transformers import pipeline
 
 app = Flask(__name__)
+
+text_generator = pipeline('text-generation')
 
 @app.route('/')
 def home():
@@ -13,21 +13,15 @@ def home():
 @app.route('/chat', methods=['POST'])
 def chat():
     user_input = request.json['input']
-    
-    # Initialize Vertex AI
-    vertexai.init(project="your-project-id", location="us-central1")
     parameters = {
-        "temperature": 0.2,
-        "max_output_tokens": 256,
+        "max_length": 256,
+        "num_return_sequences": 1,
         "top_p": 0.8,
-        "top_k": 40
+        "top_k": 40,
+        "temperature": 0.2
     }
-    model = TextGenerationModel.from_pretrained("text-bison@001")
-    response = model.predict(
-        user_input,
-        **parameters
-    )
-    return jsonify({"response": response.text})
+    response = text_generator(user_input, **parameters)
+    return jsonify({"response": response[0]['generated_text']})
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
