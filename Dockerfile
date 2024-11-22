@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.9-slim-buster
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install Werkzeug==2.0.3
