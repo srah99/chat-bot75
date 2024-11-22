@@ -22,12 +22,12 @@ def chat():
     }
     response = text_generator(user_input, **parameters)
     text = response[0]['generated_text'].replace('
-', '.')  # replace newline with period
-    sentences = text.split('.')  # split into sentences
-    sentences = [s.strip() for s in sentences]  # remove leading/trailing whitespace
+', ' ').replace('.', '')  # replace newline with space, remove periods
+    sentences = text.split('  ')  # split into sentences (assuming double space between sentences)
     unique_sentences = list(dict.fromkeys(sentences))  # remove duplicates
-    unique_sentences = [s for s in unique_sentences if s != '']  # remove empty strings
-    truncated_response = '. '.join(unique_sentences[:5])  # limit to 5 sentences
+    unique_sentences = [s.strip() for s in unique_sentences]  # remove leading/trailing whitespace
+    unique_sentences = [s + '.' for s in unique_sentences]  # add period back to each sentence
+    truncated_response = ' '.join(unique_sentences[:5])  # limit to 5 sentences
     return jsonify({"response": truncated_response})
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
