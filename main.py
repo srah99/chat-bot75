@@ -21,12 +21,8 @@ def chat():
         "temperature": 0.5
     }
     response = text_generator(user_input, **parameters)
-    text = response[0]['generated_text'].replace('', ' ').replace('.', '')  # replace newline with space, remove periods
-    sentences = text.split('  ')  # split into sentences (assuming double space between sentences)
-    unique_sentences = list(dict.fromkeys(sentences))  # remove duplicates
-    unique_sentences = [s.strip() for s in unique_sentences]  # remove leading/trailing whitespace
-    unique_sentences = [s + '.' for s in unique_sentences]  # add period back to each sentence
-    truncated_response = ''.join(unique_sentences[:5])  # limit to 5 sentences
+    truncated_response = response[0]['generated_text'].replace('.', '').replace(' ', '')  
     return jsonify({"response": truncated_response})
+    
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
