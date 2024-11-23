@@ -26,7 +26,7 @@ def chat():
     unique_sentences = list(dict.fromkeys(sentences))  # remove duplicates
     unique_sentences = [s.strip() for s in unique_sentences]  # remove leading/trailing whitespace
     unique_sentences = [s + '.' for s in unique_sentences]  # add period back to each sentence
-    truncated_response = ' '.join(unique_sentences[:5])  # limit to 5 sentences
+    truncated_response = ''.join(unique_sentences[:5])  # limit to 5 sentences
     return jsonify({"response": truncated_response})
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
