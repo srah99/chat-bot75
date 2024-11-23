@@ -21,8 +21,7 @@ def chat():
         "temperature": 0.5
     }
     response = text_generator(user_input, **parameters)
-    text = response[0]['generated_text'].replace('
-', ' ').replace('.', '')  # replace newline with space, remove periods
+    text = response[0]['generated_text'].replace('', ' ').replace('.', '')  # replace newline with space, remove periods
     sentences = text.split('  ')  # split into sentences (assuming double space between sentences)
     unique_sentences = list(dict.fromkeys(sentences))  # remove duplicates
     unique_sentences = [s.strip() for s in unique_sentences]  # remove leading/trailing whitespace
