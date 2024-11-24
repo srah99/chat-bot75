@@ -13,13 +13,14 @@ def home():
 @app.route('/chat', methods=['POST'])
 def chat():
     user_input = request.json['input']
-    parameters = {
-        "max_length": 128,
-        "num_return_sequences": 5,
-        "top_p": 0.7,
-        "top_k": 30,
-        "temperature": 0.5
-    }
+parameters = {
+    "max_length": 128,
+    "num_return_sequences": 5,
+    "top_p": 0.9,
+    "top_k": 50,
+    "temperature": 0.7,
+    "repetition_penalty": 1.5  # added repetition penalty
+}
     response = text_generator(user_input, **parameters)
     sentences = [r['generated_text'] for r in response]
     unique_sentences = list(dict.fromkeys(sentences))
