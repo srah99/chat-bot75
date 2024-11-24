@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-API_TOKEN = "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"
+API_TOKEN = ""
 MODEL_ID = "Salesforce/code-t5-small"
 API_URL = f"https://api-inference.huggingface.co/models/{Salesforce/code-t5-small}"
 
