@@ -14,14 +14,15 @@ def home():
 def chat():
     user_input = request.json['input']
     parameters = {
-        "max_length": 256,
-        "num_return_sequences": 1,
+        "max_length": 128,
+        "num_return_sequences": 5,
         "top_p": 0.9,
         "top_k": 50,
         "temperature": 0.5
     }
     response = text_generator(user_input, **parameters)
-    truncated_response = response[0]['generated_text'].replace('.', '').replace(' ', '')  
+    sentences = [r['generated_text'] for r in response]
+    truncated_response = '. '.join(sentences)
     return jsonify({"response": truncated_response})
     
 if __name__ == "__main__":
