@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 API_TOKEN = "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"
 MODEL_ID = "Salesforce/code-t5-small"
-API_URL = f"https://api-inference.huggingface.co/models/{chat-bot75}"
+API_URL = f"https://api-inference.huggingface.co/models/{Salesforce/code-t5-small}"
 
 def query_model(prompt):
     headers = {"Authorization": f"Bearer {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}"}
