@@ -24,10 +24,9 @@ def chat():
     input_ids = tokenizer.encode(user_input, return_tensors='pt')
     output = model.generate(input_ids, **generation_config)
     sentences = tokenizer.batch_decode(output, skip_special_tokens=True)
-    response_text = ' '.join([' '.join(sentence.split()) for sentence in sentences])
-    unique_words = list(dict.fromkeys(response_text.split()))
-    truncated_response = ' '.join(unique_words[:50])  # limit to 50 words
-    return jsonify({"response": truncated_response})
+    response_text = ' '.join(set(' '.join(sentence.split('
+')) for sentence in sentences))
+    return jsonify({"response": response_text})
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
