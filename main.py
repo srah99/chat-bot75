@@ -4,7 +4,7 @@ from transformers import pipeline
 
 app = Flask(__name__)
 
-text_generator = pipeline('text-generation')
+text_generator = pipeline('text-generation', model='gpt2-medium')
 
 @app.route('/')
 def home():
@@ -16,13 +16,14 @@ def chat():
     parameters = {
         "max_length": 128,
         "num_return_sequences": 5,
-        "top_p": 0.9,
-        "top_k": 50,
+        "top_p": 0.7,
+        "top_k": 30,
         "temperature": 0.5
     }
     response = text_generator(user_input, **parameters)
     sentences = [r['generated_text'] for r in response]
-    truncated_response = '. '.join(sentences)
+    unique_sentences = list(dict.fromkeys(sentences))
+    truncated_response = '. '.join(unique_sentences[:5])
     return jsonify({"response": truncated_response})
     
 if __name__ == "__main__":
