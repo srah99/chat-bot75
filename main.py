@@ -4,7 +4,7 @@ from transformers import pipeline
 
 app = Flask(__name__)
 
-text_generator = pipeline('text-generation', model='gpt2-medium')
+text_generator = pipeline('text-generation', model='Salesforce/code-t5-small')
 
 @app.route('/')
 def home():
