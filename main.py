@@ -9,7 +9,7 @@ MODEL_ID = "Salesforce/code-t5-small"
 API_URL = f"https://api-inference.huggingface.co/models/{Salesforce/code-t5-small}"
 
 def query_model(prompt):
-    headers = {"Authorization": f"Bearer {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}"}
+    headers = {"Authorization": f"Bearer {}"}
     payload = {"inputs": prompt}
     response = requests.post(API_URL, headers=headers, json=payload)
     return response.json()
