@@ -36,13 +36,15 @@ def query_model(prompt):
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    user_input = request.json['input']
-    print("User input recieved")
-    response = query_model(user_input)
-    print("Response generation result:", response)
-    if "error" in response:
-        return jsonify({"error": response["error"]}), 500
-    return jsonify({"response": response[0]["generated_text"]})
+    try:
+        user_input = request.json['input']
+        print("User input received:", user_input)
+        response = query_model(user_input)
+        print("Response generation result:", response)
+        if "error" in response:
+            return jsonify({"error": response["error"]}), 500
+        return jsonify({"response": response[0]["generated_text"]})
+        
 def find_free_port():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(('', 0))
@@ -53,5 +55,3 @@ if __name__ == "__main__":
     print(f"Flask app running on port {port}")
     app.run(debug=True, host="0.0.0.0", port=port)
 
-    app.run(debug=True, host="0.0.0.0", port=port)
-    print(f"Flask app running on port {port}")
