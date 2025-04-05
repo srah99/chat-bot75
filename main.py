@@ -1,3 +1,4 @@
+print("Chatbot initialized successfuly")
 import os
 import requests
 import socket
@@ -36,7 +37,9 @@ def query_model(prompt):
 @app.route('/chat', methods=['POST'])
 def chat():
     user_input = request.json['input']
+    print("User input recieved")
     response = query_model(user_input)
+    print("Response generation result:", response)
     if "error" in response:
         return jsonify({"error": response["error"]}), 500
     return jsonify({"response": response[0]["generated_text"]})
