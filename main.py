@@ -43,7 +43,12 @@ def chat():
         print("Response generation result:", response)
         if "error" in response:
             return jsonify({"error": response["error"]}), 500
-        return jsonify({"response": response[0]["generated_text"]})
+        if isinstance(response, dict) and "choices" in response:
+            return jsonify({"response": response["choices"][0]["text"]})
+        else:
+            return jsonify({"error": "Invalid response format"}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
         
 def find_free_port():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
