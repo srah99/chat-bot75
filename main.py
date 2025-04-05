@@ -50,5 +50,4 @@ if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=port)
 
     app.run(debug=True, host="0.0.0.0", port=port)
-    print(f"Flask app r  print(f"Flask app running on port {port}")
-
+    print(f"Flask app running on port {port}")
