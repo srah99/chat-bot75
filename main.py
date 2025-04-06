@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from dotenv import load_dotenv
 
 app = Flask(__name__, static_folder='static', static_url_path='')
+app.debug = True
 
 @app.route('/')
 def serve_html():
@@ -37,17 +38,25 @@ def query_model(prompt):
 @app.route('/chat', methods=['POST'])
 def chat():
     try:
+        print("Received chat request...")
         user_input = request.json['input']
-        print("User input received:", user_input)
+        print("User input:", user_input)
         response = query_model(user_input)
-        print("Response generation result:", response)
+        print("Model response:", response)
+        if response is None:
+            print("Model returned None")
+            return jsonify({"error": "Model error"}), 500
         if "error" in response:
-            return jsonify({"error": response["error"]}), 500
+            print("Model error:", response["error"])
+            return jsonify({"error": response["error"]}), 400
         if isinstance(response, dict) and "choices" in response:
-            return jsonify({"response": response["choices"][0]["text"]})
+            print("Successful response")
+            return jsonify({"response": response["choices"][0]["text"]}), 200
         else:
-            return jsonify({"error": "Invalid response format"}), 500
+            print("Invalid model response format")
+            return jsonify({"error": "Invalid response format"}), 400
     except Exception as e:
+        print("Unexpected error:", str(e))
         return jsonify({"error": str(e)}), 500
         
 def find_free_port():

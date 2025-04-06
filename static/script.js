@@ -31,8 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
+                    response.json().then(data => {
+                      console.error('Error:', data.error);
+                      addMessage(`Error: ${data.error}`);
+                    });
+                  } else {
+                    const data = await response.json();
+                    addMessage(data.response);
+                  }
 
                 const data = await response.json();
                 addMessage(data.response);
