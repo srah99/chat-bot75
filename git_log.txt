@@ -1,0 +1,59 @@
+45c8135 - srah99, 3 weeks ago : Update main.py
+b62131e - srah99 crawford, 3 weeks ago : DId some slight changes to the js file, then worked on the hf token authentication headers not authenticating waiting on support email response
+59e3304 - srah99, 3 weeks ago : Update main.py
+626e0bc - srah99, 3 weeks ago : updated api and small changes to the code, removed that duplocated code, codespaces is glitching showing same error again and again
+1951aaa - srah99, 3 weeks ago : debugging staements
+cc99bac - srah99, 3 weeks ago : import socket
+fd4593d - srah99, 3 weeks ago : changed line 53
+8beb8f1 - srah99, 5 months ago : Update README.md
+ac3d6da - Sarah Crawford, 5 months ago : Add index.html and script.js for frontend
+11e2ee8 - Sarah Crawford, 5 months ago : Remove .ipynb_checkpoints directory
+65fdc89 - Sarah Crawford, 5 months ago : Remove .env from tracking and update .gitignore
+469bdca - Sarah Crawford, 5 months ago : This commit recieved a rebase merge to manually resolve the conflicts
+9abd84c - srah99, 5 months ago : Update requirements.txt
+04d63b6 - srah99, 5 months ago : Update main.py
+a7eb8bf - srah99, 5 months ago : Update main.py
+fdd2736 - srah99, 5 months ago : Update main.py
+cef2a25 - srah99, 5 months ago : Update main.py
+be6edcd - srah99, 5 months ago : Update main.py
+c7911cb - srah99, 5 months ago : Update main.py
+8db6d1d - srah99, 5 months ago : Update main.py
+7b08b44 - srah99, 5 months ago : Update main.py
+f55ee5e - srah99, 5 months ago : Update main.py
+5c73bdf - srah99, 5 months ago : Update main.py
+8ed784a - srah99, 5 months ago : Update main.py
+6859130 - srah99, 5 months ago : Update main.py
+ee64554 - srah99, 5 months ago : Update main.py
+d3006a7 - srah99, 5 months ago : Update main.py
+68df064 - srah99, 5 months ago : Update main.py
+eefbef9 - srah99, 5 months ago : Update main.py
+97cf7c5 - srah99, 5 months ago : Update main.py
+d50f663 - srah99, 5 months ago : Update main.py
+9865b92 - srah99, 5 months ago : Update main.py
+9952cbf - srah99, 5 months ago : Update main.py
+0fc5f40 - srah99, 5 months ago : Update main.py
+482b1e6 - srah99, 5 months ago : Update requirements.txt
+4de5826 - srah99, 5 months ago : Update requirements.txt
+a07fdab - srah99, 5 months ago : Update and rename dockerfile.txt to Dockerfile
+c5d27a8 - srah99, 5 months ago : Update main.py
+aeaf90f - srah99, 5 months ago : Update main.py
+5550435 - srah99, 5 months ago : Update requirements.txt
+ea6de69 - srah99, 5 months ago : Update main.py
+689c242 - srah99, 5 months ago : Update main.py
+84f2eb3 - srah99, 5 months ago : Update main.py
+8cbdbc5 - srah99, 5 months ago : Update requirements.txt
+ed91344 - srah99, 5 months ago : Update main.py
+26af0c8 - srah99, 5 months ago : Update main.py
+2ffcae0 - srah99, 5 months ago : Update main.py
+c30d14e - srah99, 5 months ago : Update requirements.txt
+820408d - srah99, 5 months ago : Update requirements.txt
+1f67d06 - srah99, 5 months ago : Update requirements.txt
+7a07f95 - srah99, 5 months ago : Update main.py
+a4294d9 - srah99, 5 months ago : Update dockerfile.txt
+9eba289 - srah99, 5 months ago : Update requirements.txt
+decb598 - srah99, 5 months ago : Update dockerfile.txt
+68ca060 - srah99, 5 months ago : Update cloudbuild.yaml
+b67b193 - srah99, 5 months ago : Update cloudbuild.yaml
+12a7fd8 - srah99, 5 months ago : Update cloudbuild.yaml
+187d076 - srah99, 5 months ago : Update cloudbuild.yaml
+8526ce9 - srah99, 5 months ago : Add files via upload

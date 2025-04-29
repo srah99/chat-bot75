@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from dotenv import load_dotenv
 
 app = Flask(__name__, static_folder='static', static_url_path='')
-app.debug = True
+# app.debug = True
 
 @app.route('/')
 def serve_html():
@@ -19,7 +19,14 @@ MODEL_ID = "tiiuae/falcon-7b-instruct"
 API_URL = f"https://api-inference.huggingface.co/models/{MODEL_ID}"
 
 def query_model(prompt):
-    headers = {"Authorization": f"Bearer {os.environ.get('MY_API')}"}
+    api_key = os.environ.get('MY_API')
+    # Check if API key is missing or empty
+    if not api_key:
+        print("API key (MY_API) not found in environment variables. Returning mock response.")
+        # Mimic the expected successful response structure
+        return {"choices": [{"text": f"This is a mock response because the API key is missing. Your input was: 	'{prompt}'"}]}
+
+    headers = {"Authorization": f"Bearer {api_key}"}
     payload = {
         "inputs": prompt,
         "parameters": {
@@ -29,11 +36,24 @@ def query_model(prompt):
         }
     }
     try:
+        print(f"Attempting API call to {API_URL}...")
         response = requests.post(API_URL, headers=headers, json=payload)
+        print(f"API response status code: {response.status_code}")
+        # Check specifically for authentication error
+        if response.status_code == 401:
+             print("API key is invalid (401 Unauthorized). Returning mock response.")
+             # Return mock response but indicate the key was invalid
+             return {"choices": [{"text": f"This is a mock response because the provided API key is invalid. Your input was: 	'{prompt}'"}]}
+        # Raise exceptions for other bad status codes (4xx client error or 5xx server error)
         response.raise_for_status()
+        # If successful, return the JSON response
+        print("API call successful.")
         return response.json()
     except requests.exceptions.RequestException as e:
-        return {"error": str(e)}
+        # Catch any request exceptions (connection, timeout, etc.) or errors raised by raise_for_status()
+        print(f"API request failed: {e}. Returning mock response.")
+        # Return mock response indicating an API error
+        return {"choices": [{"text": f"This is a mock response due to an API error ({type(e).__name__}). Your input was: 	'{prompt}'"}]}
 
 @app.route('/chat', methods=['POST'])
 def chat():
