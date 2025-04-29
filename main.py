@@ -15,7 +15,7 @@ def serve_html():
 # Load environment variables
 load_dotenv()
 
-MODEL_ID = "tiiuae/falcon-7b-instruct"
+MODEL_ID = "meta-llama/Meta-Llama-3.1-8B-Instruct"
 API_URL = f"https://api-inference.huggingface.co/models/{MODEL_ID}"
 
 def query_model(prompt):
