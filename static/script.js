@@ -40,8 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     addMessage(data.response);
                   }
 
-                const data = await response.json();
-                addMessage(data.response);
+
             } catch (error) {
                 console.error('Error:', error);
                 addMessage('Sorry, there was an error processing your request.');
