@@ -3,104 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chatbot 75</title>
+    <title>AI Chatbot 75 :: Holographic Interface</title>
     <style>
+        @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
+
+        :root {
+            --primary-glow: #00ffff; /* Cyan */
+            --secondary-glow: #ff00ff; /* Magenta */
+            --background-dark: #0a0a1a; /* Very dark blue */
+            --text-color: #e0e0ff; /* Light lavender */
+            --border-color: rgba(0, 255, 255, 0.3);
+            --input-bg: rgba(0, 50, 50, 0.5);
+            --message-bg-user: rgba(0, 100, 100, 0.6);
+            --message-bg-bot: rgba(50, 0, 50, 0.6);
+        }
+
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            max-width: 700px;
+            font-family: "Orbitron", sans-serif;
+            background-color: var(--background-dark);
+            color: var(--text-color);
+            max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #f4f4f9;
             display: flex;
             flex-direction: column;
             height: calc(100vh - 40px);
             box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 0 15px var(--primary-glow), inset 0 0 10px rgba(0, 255, 255, 0.2);
+            overflow: hidden; /* Prevent scrollbars on body */
         }
+
         h1 {
             text-align: center;
-            color: #333;
+            color: var(--primary-glow);
+            text-shadow: 0 0 5px var(--primary-glow), 0 0 10px var(--primary-glow);
+            margin-bottom: 20px;
+            font-weight: 700;
         }
+
         #chat-container {
-            border: 1px solid #ddd;
-            background-color: #fff;
+            background-color: rgba(10, 10, 26, 0.8); /* Slightly transparent dark bg */
+            border: 1px solid var(--border-color);
             padding: 15px;
             height: 100%;
             overflow-y: scroll;
             flex-grow: 1;
             margin-bottom: 15px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: inset 0 0 8px rgba(0, 255, 255, 0.3);
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-glow) var(--background-dark);
         }
+
+        /* Custom scrollbar for WebKit browsers */
+        #chat-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        #chat-container::-webkit-scrollbar-track {
+            background: var(--background-dark);
+            border-radius: 4px;
+        }
+        #chat-container::-webkit-scrollbar-thumb {
+            background-color: var(--primary-glow);
+            border-radius: 4px;
+            border: 1px solid var(--background-dark);
+        }
+
         .message {
-            padding: 8px 12px;
-            margin-bottom: 10px;
+            padding: 10px 15px;
+            margin-bottom: 12px;
             border-radius: 15px;
-            max-width: 80%;
+            max-width: 85%;
             word-wrap: break-word;
+            border: 1px solid transparent;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative; /* For potential pseudo-elements */
         }
+
         .user-message {
-            background-color: #007bff;
-            color: white;
+            background-color: var(--message-bg-user);
+            color: var(--text-color);
             margin-left: auto;
+            border-color: var(--primary-glow);
             border-bottom-right-radius: 5px;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
         }
+
         .bot-message {
-            background-color: #e9ecef;
-            color: #333;
+            background-color: var(--message-bg-bot);
+            color: var(--text-color);
             margin-right: auto;
+            border-color: var(--secondary-glow);
             border-bottom-left-radius: 5px;
+            box-shadow: 0 0 8px rgba(255, 0, 255, 0.5);
         }
+
         .user-message p, .bot-message p {
              margin: 0;
+             line-height: 1.4;
         }
+
         #input-area {
             display: flex;
             gap: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-color);
         }
+
         #user-input {
             flex-grow: 1;
-            padding: 12px;
-            border: 1px solid #ccc;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-bg);
+            color: var(--text-color);
             border-radius: 20px;
             box-sizing: border-box;
+            font-family: "Orbitron", sans-serif;
+            box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.3);
         }
+        #user-input:focus {
+            outline: none;
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 8px var(--primary-glow), inset 0 0 5px rgba(0, 255, 255, 0.3);
+        }
+
         #send-button, #clear-button {
             padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
+            background-color: transparent;
+            color: var(--primary-glow);
+            border: 1px solid var(--primary-glow);
             border-radius: 20px;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: all 0.3s ease;
+            font-family: "Orbitron", sans-serif;
+            text-shadow: 0 0 3px var(--primary-glow);
+            box-shadow: 0 0 5px var(--primary-glow);
         }
+
         #clear-button {
-             background-color: #dc3545;
+            color: var(--secondary-glow);
+            border-color: var(--secondary-glow);
+            text-shadow: 0 0 3px var(--secondary-glow);
+            box-shadow: 0 0 5px var(--secondary-glow);
         }
-        #send-button:hover, #clear-button:hover {
-            opacity: 0.9;
+
+        #send-button:hover {
+            background-color: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 10px var(--primary-glow);
         }
+        #clear-button:hover {
+            background-color: rgba(255, 0, 255, 0.2);
+            box-shadow: 0 0 10px var(--secondary-glow);
+        }
+
         #send-button:disabled {
-            background-color: #aaa;
+            color: #555;
+            border-color: #555;
             cursor: not-allowed;
+            box-shadow: none;
+            text-shadow: none;
+            background-color: rgba(50, 50, 50, 0.3);
         }
+
         #loading-indicator {
             display: none; /* Hidden by default */
             text-align: center;
             padding: 10px;
-            color: #555;
+            color: var(--primary-glow);
+            text-shadow: 0 0 5px var(--primary-glow);
+            font-style: italic;
         }
     </style>
 </head>
 <body>
     <h1>AI Chatbot 75</h1>
     <div id="chat-container"></div>
-    <div id="loading-indicator">Thinking...</div>
+    <div id="loading-indicator">Processing Transmission...</div>
     <div id="input-area">
-        <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
-        <button id="send-button">Send</button>
-        <button id="clear-button">Clear</button>
+        <input type="text" id="user-input" placeholder="Enter command..." autocomplete="off">
+        <button id="send-button">Transmit</button>
+        <button id="clear-button">Purge Log</button>
     </div>
 
-    <script src="/script.js"></script> <!-- Updated src path -->
+    <script src="/script.js"></script>
 </body>
 </html>
