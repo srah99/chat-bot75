@@ -1,58 +1,36 @@
-
-runtime: python39
-env: flex
-
-entrypoint: gunicorn -b :$PORT main:app
-
-runtime_config:
-  python_version: 3.9
-
-resources:
-  cpu: 1
-  memory_gb: 0.5
-  disk_size_gb: 10
-
-env_variables:
-  GOOGLE_CLOUD_PROJECT: "my-project-web-chat-91774"
-
-automatic_scaling:
-  min_num_instances: 1
-  max_num_instances: 5
-  cool_down_period_sec: 180
-  cpu_utilization:
-    target_utilization: 0.6
-
-liveness_check:
-  path: "/"
-  check_interval_sec: 30
-  timeout_sec: 4
-  failure_threshold: 2
-  success_threshold: 2
-
-readiness_check:
-  path: "/"
-  check_interval_sec: 5
-  timeout_sec: 4
-  failure_threshold: 2
-  success_threshold: 2
-
 steps:
+# 1. Build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/my-project-web-chat-91774/chatbot-app']
+  args: ['build', '-t', 'gcr.io/my-project-web-chat-91774/chatbot-app:$COMMIT_SHA', '.']
+
+# 2. Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/my-project-web-chat-91774/chatbot-app:$COMMIT_SHA']
+
+# 3. Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
   args:
   - 'run'
   - 'deploy'
-  - 'chatbot-app'
+  - 'chatbot-app' # Name of the Cloud Run service
   - '--image'
-  - 'gcr.io/my-project-web-chat-91774/chatbot-app'
+  - 'gcr.io/my-project-web-chat-91774/chatbot-app:$COMMIT_SHA'
   - '--region'
   - 'us-central1'
   - '--platform'
   - 'managed'
-  - '--allow-unauthenticated'
+  - '--allow-unauthenticated' # Allows public access, adjust if needed
+  # Add environment variables needed by your app. For secrets like API keys,
+  # it's highly recommended to use Google Secret Manager and reference them here:
+  # Example using Secret Manager (replace with your actual secret names and versions):
+  # - '--set-secrets=MY_API=huggingface-api-key:latest'
+  # Example setting non-sensitive env vars directly:
+  # - '--set-env-vars=SOME_VARIABLE=some_value'
 
+# This specifies the image produced by the build, which can be used by subsequent steps
+images:
+- 'gcr.io/my-project-web-chat-91774/chatbot-app:$COMMIT_SHA'
 
 options:
   logging: CLOUD_LOGGING_ONLY
